@@ -1,8 +1,19 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"net/http"
+	"secretSanta/api/healthCheck"
+
+	"github.com/gorilla/mux"
+)
 
 func main() {
-	fmt.Println("Hello World")
-	fmt.Println("TEST")
+	router := mux.NewRouter()
+	router.HandleFunc("/alive", healthCheck.GetHealth).Methods("GET")
+	err := http.ListenAndServe(":8000", router)
+	if err != nil {
+		fmt.Print(err)
+	}
+
 }
