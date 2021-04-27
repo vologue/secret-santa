@@ -5,11 +5,22 @@ import (
 	"net/http"
 )
 
-func RespondWithError(w http.ResponseWriter, httpStatus int, message string) {
-	RespondWithJSON(w, httpStatus, map[string]string{"message": message})
+type response struct {
+	Message string
+	Data    interface{}
 }
 
-func RespondWithJSON(w http.ResponseWriter, httpStatus int, payload interface{}) {
+func RespondWithError(w http.ResponseWriter, httpStatus int, message string, data interface{}) {
+	var resp response
+	resp.Message = message
+	if data != nil {
+		resp.Data = data
+	}
+	RespondWithJSON(w, httpStatus, resp)
+
+}
+
+func RespondWithJSON(w http.ResponseWriter, httpStatus int, payload response) {
 	response, _ := json.Marshal(payload)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(httpStatus)
