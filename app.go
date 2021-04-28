@@ -20,9 +20,9 @@ func startUp() {
 func main() {
 	startUp()
 	router := mux.NewRouter()
-	router.HandleFunc("/alive", healthCheck.GetHealth).Methods("GET")
-	router.HandleFunc("/create", users.NewUser).Methods("POST")
-	router.HandleFunc("/create", users.UpdateUser).Methods("PUT")
+	router.HandleFunc("/api/v1/health-check", healthCheck.GetHealth).Methods("GET")
+	router.HandleFunc("/api/v1/create-user", users.NewUser).Methods("POST")
+	router.HandleFunc("/api/v1/update-user", users.UpdateUser).Methods("PUT")
 	err := http.ListenAndServe(":8000", router)
 	if err != nil {
 		fmt.Print(err)
