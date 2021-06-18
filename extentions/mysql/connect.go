@@ -1,19 +1,20 @@
 package mysqlExtention
 
 import (
-	"fmt"
+	"log"
+	"secretSanta/constants"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
 func ConnectDB() *gorm.DB {
-	dsn := "root:aundriul98@tcp(127.0.0.1:3306)/friends?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := constants.MysqlUser + ":" + constants.MysqlPassword + "@tcp(" + constants.MysqlHost + ":" + constants.MysqlPort + ")/" + constants.DbName + "?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
-	if err == nil {
-		fmt.Println(err)
+	if err != nil {
+		log.Fatal(err)
 	} else {
-		fmt.Println("Connected")
+		log.Println("Connected")
 	}
 	return db
 }

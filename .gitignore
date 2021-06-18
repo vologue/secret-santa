@@ -2,3 +2,4 @@
 .vscode/*
 app
 secretSanta
+local_env.sh
